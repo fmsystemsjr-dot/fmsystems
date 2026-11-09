@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEO - Remates</title>
+<style>body{font-family:system-ui,Arial,sans-serif;color:#163b26;background:#f2f8f4;padding:28px}main{max-width:520px;margin:10vh auto;background:#fff;border:1px solid #cfe8d6;border-radius:18px;padding:24px;box-shadow:0 12px 35px #0000000d}h1{margin-top:0}p{line-height:1.5}small{color:#64748b}</style>
+</head><body><main><h1>Remates</h1><p id="estado">Abriendo...</p><small>Inventario NEO</small></main>
+<script src="./config.js"></script>
+<script>
+(function(){
+  var estado=document.getElementById('estado');
+  try{
+    var config=window.NEO_CONFIG||{};
+    var base=String(config.webAppUrl||'').trim();
+    if(!/^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(base)){
+      throw new Error('Configura config.js con la URL /exec del NUEVO Apps Script.');
+    }
+    var token=new URLSearchParams(window.location.search).get('v');
+    if(!token)throw new Error('Falta el identificador del enlace. Ábrelo desde el Portal o pide tu enlace al administrador.');
+    var destino=new URL(base);
+    destino.searchParams.set('modo','remates');
+    destino.searchParams.set('v',token);
+    estado.textContent='Redirigiendo a '+'Remates'+'...';
+    window.location.replace(destino.toString());
+  }catch(e){estado.textContent=e.message||String(e);}
+})();
+</script></body></html>
